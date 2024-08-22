@@ -1,0 +1,21 @@
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: '{{ mev_boost_service_path }}'
+    owner: 'dockremap'
+    group: 'docker'
+    mode: "0750"
+    state: 'directory'
+
+- name: Create compose file
+  # no_log: true
+  ansible.builtin.template:
+    src: 'docker-compose.yml.j2'
+    dest: '{{ mev_boost_compose_file }}'
+    owner: 'dockremap'
+    group: 'docker'
+    mode: "0640"
+
+- name: Create containers
+  community.docker.docker_compose_v2:
+    project_src: '{{ mev_boost_service_path }}'

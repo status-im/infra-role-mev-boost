@@ -1,0 +1,20 @@
+---
+services:
+  mev-boost:
+    container_name: '{{ mev_boost_cont_name }}'
+    image: '{{ mev_boost_cont_image }}'
+    user: root
+    restart: 'always'
+    ports:
+      - '0.0.0.0:{{ mev_boost_cont_port}}:{{ mev_boost_cont_port }}/tcp'
+    command: >
+      -addr 0.0.0.0:{{ mev_boost_cont_port }}
+      -{{ mev_boost_network | mandatory }}
+      -relay-check
+      -relays {{ mev_boost_relays | join(',') | mandatory }}
+      -log-no-version
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://0.0.0.0:{{ mev_boost_cont_port }}/eth/v1/builder/status']
+      interval: 30s
+      timeout: 10s
+      retries: 3

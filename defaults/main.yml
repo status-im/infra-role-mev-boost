@@ -1,0 +1,28 @@
+---
+# General
+mev_boost_service_name: 'mev-boost'
+mev_boost_service_path: '/data/{{ mev_boost_service_name }}'
+mev_boost_compose_file: '{{ mev_boost_service_path }}/docker-compose.yml'
+
+# Container
+mev_boost_cont_name: '{{ mev_boost_service_name }}'
+mev_boost_cont_tag: '1.7.1'
+mev_boost_cont_image: 'flashbots/mev-boost:{{ mev_boost_cont_tag }}'
+
+# Network
+mev_boost_cont_port: 18550
+
+# mev-boost
+#mev_boost_network: 'holesky'
+#mev_boost_relays:
+#  - 'https://0xaa58208899c6105603b74396734a6263cc7d947f444f396a90f7b7d3e65d102aec7e5e5291b27e08d02c50a050825c2f@holesky.titanrelay.xyz'
+
+# Consul service definition settings
+mev_boost_consul_service_name: '{{ mev_boost_service_name }}'
+mev_boost_consul_service_file_name: '{{ mev_boost_service_name | replace("-", "_") }}'
+mev_boost_consul_check_disabled: false
+mev_boost_consul_check_interval: '60s'
+mev_boost_consul_check_timeout: '5s'
+mev_boost_consul_success_before_passing: 0
+mev_boost_consul_failures_before_warning: 1
+mev_boost_consul_failures_before_critical: 2
